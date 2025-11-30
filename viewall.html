@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Properties - Eminent Real Estate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; width: 100%; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #E8E3F0; min-height: 100vh; display: flex; flex-direction: column; }
+        .header {
+            background: linear-gradient(135deg, #9C27B0, #E91E63);
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 8px solid #7B1FA2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .logo { font-family: 'Fredoka One'; font-size: 48px; color: white; background: rgba(255,255,255,0.2); padding: 10px 30px; border-radius: 50px; }
+        .nav a { color: white; font-size: 32px; margin: 0 30px; text-decoration: none; font-weight: bold; }
+        .nav a:hover { transform: scale(1.1); text-shadow: 0 0 15px white; }
+
+        .main { display: flex; flex: 1; }
+        .sidebar {
+            width: 380px;
+            background: linear-gradient(180deg, #BA68C8, #9575CD);
+            padding: 40px 30px;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h2 { font-family: 'Fredoka One'; font-size: 40px; color: white; text-align: center; margin-bottom: 30px; }
+        .search-box { width: 100%; padding: 18px 25px; font-size: 20px; border: none; border-radius: 50px; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .filter { margin-bottom: 20px; color: white; }
+        .filter label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 18px; }
+        .filter input[type="range"] { width: 100%; height: 15px; border-radius: 10px; background: #E0C3FC; -webkit-appearance: none; margin: 10px 0; }
+        .filter input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; background: #6A0DAD; border-radius: 50%; cursor: pointer; }
+        .filter select, .filter input[type="number"] {
+            width: 100%; padding: 16px; border-radius: 25px; border: none; font-size: 17px; background: #E0C3FC; margin-top: 8px;
+        }
+        .range-value { text-align: center; margin-top: 8px; font-weight: bold; }
+        .reset-btn {
+            margin-top: auto;
+            padding: 18px;
+            background: white;
+            color: #8E24AA;
+            font-family: 'Fredoka One';
+            font-size: 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .reset-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+
+        .grid {
+            flex: 1;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 35px;
+            background: #E8E3F0;
+        }
+        .card {
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transition: all 0.4s;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .card:hover { transform: translateY(-15px) scale(1.03); box-shadow: 0 30px 60px rgba(0,0,0,0.25); }
+        .card img { width: 100%; height: 400px; object-fit: cover; }
+        .card-title {
+            padding: 22px;
+            text-align: center;
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 28px;
+            color: #4A148C;
+            background: linear-gradient(135deg, #FFB6FF, #E0B8FF);
+        }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">SERENIA INDIA</div>
+        <div class="nav">
+            <a href="index.html">HOME</a>
+            <a href="#" id="brochureBtn">PDF BROCHURE</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="sidebar">
+            <h2>FILTERS</h2>
+            <input type="text" id="searchInput" class="search-box" placeholder="Search Title, City, Address...">
+
+            <div class="filter">
+                <label>MAX PRICE (AED):</label>
+                <input type="range" id="priceFilter" min="0" max="100000000" value="100000000" step="500000">
+                <div class="range-value" id="priceValue">Any Price</div>
+            </div>
+
+            <div class="filter">
+                <label>MAX SQFT:</label>
+                <input type="range" id="sqftFilter" min="0" max="30000" value="30000" step="500">
+                <div class="range-value" id="sqftValue">Any Size</div>
+            </div>
+
+            <div class="filter">
+                <label>BEDROOMS</label>
+                <input type="number" id="minBeds" placeholder="Min (e.g. 3)" min="0">
+                <input type="number" id="maxBeds" placeholder="Max (e.g. 10)" min="0" style="margin-top:8px;">
+            </div>
+
+            <div class="filter">
+                <label>BATHROOMS</label>
+                <input type="number" id="minBaths" placeholder="Min (e.g. 2)" min="0">
+                <input type="number" id="maxBaths" placeholder="Max (e.g. 8)" min="0" style="margin-top:8px;">
+            </div>
+
+            <div class="filter">
+                <label>CATEGORY:</label>
+                <select id="catFilter">
+                    <option value="">Any</option>
+                    <option value="Sale">Sale</option>
+                    <option value="Rent">Rent</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>TYPE:</label>
+                <select id="typeFilter"><option value="">Any</option></select>
+            </div>
+
+            <button class="reset-btn" id="resetFilters">Reset Filters</button>
+        </div>
+
+        <div class="grid" id="propertyGrid"></div>
+    </div>
+
+    <script>
+        let allProperties = [];
+
+        // Robust CSV parser that handles quoted commas properly
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current);
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current);
+            return result.map(s => s.replace(/^"|"$/g, '').trim());
+        }
+
+        async function loadProperties() {
+            try {
+                const response = await fetch('properties.csv?t=' + Date.now()); // cache buster
+                const text = await response.text();
+                const lines = text.trim().split('\n');
+                if (lines.length <= 1) {
+                    document.getElementById('propertyGrid').innerHTML = '<p style="grid-column:1/-1;text-align:center;font-size:32px;color:#999;margin-top:120px;">No properties listed yet!</p>';
+                    return;
+                }
+
+                const headers = parseCSVLine(lines[0]);
+                allProperties = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    const values = parseCSVLine(lines[i]);
+                    if (values.length < headers.length) continue;
+
+                    const obj = {};
+                    headers.forEach((h, idx) => obj[h] = values[idx] || '');
+
+                    const photoList = obj.photos ? obj.photos.split('|').filter(Boolean) : [];
+                    const firstPhoto = photoList[0] ? `photos/${photoList[0]}` : '';
+
+                    allProperties.push({
+                        id: obj.id || '',
+                        title: obj.title || 'Untitled Property',
+                        type: obj.property_type || '',
+                        category: obj.category || '',
+                        address: obj.full_address || '',
+                        city: obj.city || '',
+                        beds: parseInt(obj.bedrooms) || 0,
+                        baths: parseInt(obj.bathrooms) || 0,
+                        area: parseInt(obj.area_sqft) || 0,
+                        sale_price: parseFloat(obj.sale_price) || 0,
+                        monthly_rent: parseFloat(obj.monthly_rent) || 0,
+                        photo: firstPhoto || 'https://via.placeholder.com/400x500/FFB6FF/4A148C?text=No+Photo'
+                    });
+                }
+
+                // Populate Type dropdown
+                const types = [...new Set(allProperties.map(p => p.type))].filter(Boolean).sort();
+                const typeSelect = document.getElementById('typeFilter');
+                typeSelect.innerHTML = '<option value="">Any</option>';
+                types.forEach(t => typeSelect.add(new Option(t, t)));
+
+                renderProperties(allProperties);
+            } catch (e) {
+                console.error("Load error:", e);
+                document.getElementById('propertyGrid').innerHTML = '<p style="color:red;">Error loading properties.</p>';
+            }
+        }
+
+        function renderProperties(list) {
+            const grid = document.getElementById('propertyGrid');
+            grid.innerHTML = '';
+            if (list.length === 0) {
+                grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;font-size:32px;color:#999;margin-top:120px;">No properties match your filters</p>';
+                return;
+            }
+            list.forEach((prop, i) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.animation = `fadeInUp 0.6s ease-out ${i*0.07}s forwards`;
+                card.innerHTML = `
+                    <img src="${prop.photo}" alt="${prop.title}"
+                         onerror="this.src='https://via.placeholder.com/400x500/FFB6FF/4A148C?text=${encodeURIComponent(prop.title)}'">
+                    <div class="card-title">${prop.title}</div>
+                `;
+                card.onclick = () => location.href = `propertydetail.html?id=${prop.id}`;
+                grid.appendChild(card);
+            });
+        }
+
+        function applyFilters() {
+            let filtered = allProperties;
+
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            if (search) filtered = filtered.filter(p => 
+                p.title.toLowerCase().includes(search) || 
+                p.address.toLowerCase().includes(search) || 
+                p.city.toLowerCase().includes(search)
+            );
+
+            const maxPrice = +document.getElementById('priceFilter').value;
+            if (maxPrice < 100000000) filtered = filtered.filter(p => 
+                (p.category === 'Sale' ? p.sale_price : p.monthly_rent) <= maxPrice
+            );
+
+            const maxSqft = +document.getElementById('sqftFilter').value;
+            if (maxSqft < 30000) filtered = filtered.filter(p => p.area <= maxSqft);
+
+            const minBeds = +document.getElementById('minBeds').value || 0;
+            const maxBeds = +document.getElementById('maxBeds').value || Infinity;
+            if (minBeds || maxBeds < Infinity) filtered = filtered.filter(p => p.beds >= minBeds && p.beds <= maxBeds);
+
+            const minBaths = +document.getElementById('minBaths').value || 0;
+            const maxBaths = +document.getElementById('maxBaths').value || Infinity;
+            if (minBaths || maxBaths < Infinity) filtered = filtered.filter(p => p.baths >= minBaths && p.baths <= maxBaths);
+
+            const cat = document.getElementById('catFilter').value;
+            if (cat) filtered = filtered.filter(p => p.category === cat);
+
+            const type = document.getElementById('typeFilter').value;
+            if (type) filtered = filtered.filter(p => p.type === type);
+
+            renderProperties(filtered);
+        }
+
+        function updateValue(id, suffix = '') {
+            const val = document.getElementById(id).value;
+            const max = document.getElementById(id).max;
+            const display = document.getElementById(id.replace('Filter', 'Value'));
+            display.textContent = val == max ? 'Any' + suffix : 
+                (val >= 1000000 ? (val/1000000).toFixed(1)+'M' : val.toLocaleString()) + suffix;
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('priceFilter').value = 100000000;
+            document.getElementById('sqftFilter').value = 30000;
+            document.getElementById('priceValue').textContent = 'Any Price';
+            document.getElementById('sqftValue').textContent = 'Any Size';
+            document.getElementById('minBeds').value = '';
+            document.getElementById('maxBeds').value = '';
+            document.getElementById('minBaths').value = '';
+            document.getElementById('maxBaths').value = '';
+            document.getElementById('catFilter').value = '';
+            document.getElementById('typeFilter').value = '';
+            applyFilters();
+        }
+
+        // Event Listeners
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('priceFilter').addEventListener('input', () => { updateValue('priceFilter', ' AED'); applyFilters(); });
+        document.getElementById('sqftFilter').addEventListener('input', () => { updateValue('sqftFilter', ' sqft'); applyFilters(); });
+        ['minBeds','maxBeds','minBaths','maxBaths','catFilter','typeFilter'].forEach(id => {
+            document.getElementById(id).addEventListener('input', applyFilters);
+            document.getElementById(id).addEventListener('change', applyFilters);
+        });
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
+        document.getElementById('brochureBtn').onclick = () => alert("PDF Brochure Coming Soon! Made with love by SERENIA INDIA");
+
+        loadProperties();
+    </script>
+</body>
+</html>

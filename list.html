@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Property - Eminent Real Estate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #E0E0E0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #D8B4E8, #C880E8);
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 40px;
+            position: relative;
+            animation: slideDown 1s ease-out;
+        }
+        .header h1 {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 60px;
+            color: #000;
+        }
+        .home-btn {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            background: #000;
+            color: white;
+            padding: 14px 35px;
+            font-size: 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+        .home-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #B8A0D8;
+            border-radius: 40px;
+            padding: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        label {
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+            width: 280px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        input, select, textarea {
+            flex: 1;
+            padding: 16px 20px;
+            font-size: 18px;
+            border: 3px solid transparent;
+            border-radius: 50px;
+            background: #f0e8f5;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        select {
+            appearance: none;
+            background: #f0e8f5 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%23824BC4'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 20px center;
+            background-size: 20px;
+            padding-right: 50px;
+        }
+        textarea { height: 100px; resize: vertical; border-radius: 30px; }
+
+        /* Custom input that replaces select */
+        .custom-input {
+            display: none;
+            flex: 1;
+        }
+        .custom-input.active {
+            display: block;
+        }
+
+        .upload-box {
+            margin: 40px 0;
+            padding: 30px;
+            background: #D7C8E2;
+            border-radius: 30px;
+            text-align: center;
+        }
+        .upload-btn {
+            background: #000;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .file-names { margin-top: 10px; color: #555; font-size: 16px; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 50px 0;
+        }
+        .feature-box {
+            background: #F8F0FF;
+            border: 8px solid #BA68C8;
+            border-radius: 40px;
+            padding: 30px;
+            text-align: center;
+        }
+        .feature-box h3 {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 36px;
+            margin-bottom: 25px;
+            color: #000;
+        }
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 25px;
+            align-items: flex-start;
+        }
+        .checkbox-list label {
+            font-size: 22px;
+            color: #6A0DAD;
+            font-weight: bold;
+            width: auto;
+            text-shadow: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .checkbox-list input[type="checkbox"] {
+            width: 26px;
+            height: 26px;
+            accent-color: #6A0DAD;
+        }
+        .add-custom {
+            display: flex;
+            gap: 10px;
+        }
+        .add-custom input {
+            flex: 1;
+            border-radius: 50px 0 0 50px;
+            font-size: 18px;
+        }
+        .add-custom button {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 0 35px;
+            border-radius: 0 50px 50px 0;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .add-custom button:hover { background: #333; }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(135deg, #C850C0, #FF6BD6);
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transition: 0.4s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        }
+        @keyframes slideDown { from { transform: translateY(-100px); opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="home-btn">HOME</a>
+        <h1>LIST PROPERTY</h1>
+    </div>
+
+    <div class="container">
+        <form id="propertyForm" enctype="multipart/form-data">
+            <div class="form-row">
+                <label>TITLE:</label>
+                <input type="text" name="title" required>
+            </div>
+
+            <!-- PROPERTY TYPE - With Custom Option -->
+            <div class="form-row">
+                <label>PROPERTY TYPE:</label>
+                <div style="flex:1;position:relative;">
+                    <select id="propertyTypeSelect" onchange="toggleCustom('propertyType')">
+                        <option value="">Select Type</option>
+                        <!-- Options will be filled by JS -->
+                        <option value="custom">Custom (Type your own)</option>
+                    </select>
+                    <input type="text" name="property_type" id="propertyTypeCustom" class="custom-input" placeholder="Enter custom property type">
+                </div>
+            </div>
+
+            <!-- CATEGORY - With Custom Option -->
+            <div class="form-row">
+                <label>CATEGORY:</label>
+                <div style="flex:1;position:relative;">
+                    <select id="categorySelect" onchange="toggleCustom('category')">
+                        <option value="">Select Category</option>
+                        <!-- Options will be filled by JS -->
+                        <option value="custom">Custom (Type your own)</option>
+                    </select>
+                    <input type="text" name="category" id="categoryCustom" class="custom-input" placeholder="Enter custom category">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>FULL ADDRESS:</label>
+                <input type="text" name="full_address" required>
+            </div>
+            <div class="form-row">
+                <label>CITY:</label>
+                <input type="text" name="city" required>
+            </div>
+            <div class="form-row">
+                <label>BEDROOMS:</label>
+                <input type="number" name="bedrooms" min="0">
+            </div>
+            <div class="form-row">
+                <label>BATHROOMS:</label>
+                <input type="number" name="bathrooms" min="0">
+            </div>
+            <div class="form-row">
+                <label>AREA (SQFT):</label>
+                <input type="number" name="area_sqft" min="0">
+            </div>
+            <div class="form-row">
+                <label>SALE PRICE (AED):</label>
+                <input type="number" name="sale_price" min="0">
+            </div>
+            <div class="form-row">
+                <label>PER SQFT PRICE:</label>
+                <input type="number" name="per_sqft_price" min="0">
+            </div>
+            <div class="form-row">
+                <label>MONTHLY RENT (AED):</label>
+                <input type="number" name="monthly_rent" min="0">
+            </div>
+            <div class="form-row">
+                <label>SELLER NAME:</label>
+                <input type="text" name="seller_name" required>
+            </div>
+            <div class="form-row">
+                <label>SELLER PHONE:</label>
+                <input type="text" name="seller_phone" placeholder="e.g. +971501234567" required>
+            </div>
+            <div class="form-row">
+                <label>DESCRIPTION:</label>
+                <textarea name="description"></textarea>
+            </div>
+
+            <div class="upload-box">
+                <h3>UPLOAD PHOTOS (Multiple)</h3>
+                <label class="upload-btn">Choose Photos <input type="file" id="photos" name="photos" multiple accept="image/*" hidden></label>
+                <div id="photoNames" class="file-names">No photos selected</div>
+
+                <h3>UPLOAD VIDEOS (Multiple)</h3>
+                <label class="upload-btn">Choose Videos <input type="file" id="videos" name="videos" multiple accept="video/*" hidden></label>
+                <div id="videoNames" class="file-names">No videos selected</div>
+            </div>
+
+            <!-- AMENITIES & DOCS REQUIRED -->
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h3>AMENITIES</h3>
+                    <div class="checkbox-list" id="amenitiesList">
+                        <label><input type="checkbox" name="amenities[]" value="ELEVATOR"> ELEVATOR</label>
+                        <label><input type="checkbox" name="amenities[]" value="PARKING"> PARKING</label>
+                        <label><input type="checkbox" name="amenities[]" value="PLAYGROUND"> PLAYGROUND</label>
+                        <label><input type="checkbox" name="amenities[]" value="SWIMMING POOL"> SWIMMING POOL</label>
+                        <label><input type="checkbox" name="amenities[]" value="HELIPAD"> HELIPAD</label>
+                        <label><input type="checkbox" name="amenities[]" value="LIBRARY"> LIBRARY</label>
+                        <label><input type="checkbox" name="amenities[]" value="TEMPLE"> TEMPLE</label>
+                        <label><input type="checkbox" name="amenities[]" value="CLUB"> CLUB</label>
+                        <label><input type="checkbox" name="amenities[]" value="GYM"> GYM</label>
+                    </div>
+                    <div class="add-custom">
+                        <input type="text" id="customAmenity" placeholder="Add custom amenity">
+                        <button type="button" onclick="addCustom('amenities[]', 'amenitiesList', 'customAmenity')">Add +</button>
+                    </div>
+                </div>
+
+                <div class="feature-box">
+                    <h3>DOCS REQUIRED</h3>
+                    <div class="checkbox-list" id="docsList">
+                        <label><input type="checkbox" name="documents[]" value="EMIRATES ID"> EMIRATES ID</label>
+                        <label><input type="checkbox" name="documents[]" value="TITLE DEED"> TITLE DEED</label>
+                        <label><input type="checkbox" name="documents[]" value="PASSPORT COPY"> PASSPORT COPY</label>
+                        <label><input type="checkbox" name="documents[]" value="FORM A"> FORM A</label>
+                        <label><input type="checkbox" name="documents[]" value="MOU"> MOU</label>
+                        <label><input type="checkbox" name="documents[]" value="NOC"> NOC</label>
+                        <label><input type="checkbox" name="documents[]" value="SERVICE CHARGE"> SERVICE CHARGE</label>
+                        <label><input type="checkbox" name="documents[]" value="MORTGAGE CLEARANCE"> MORTGAGE CLEARANCE</label>
+                        <label><input type="checkbox" name="documents[]" value="ORIGINAL KEYS"> ORIGINAL KEYS</label>
+                    </div>
+                    <div class="add-custom">
+                        <input type="text" id="customDoc" placeholder="Add custom document">
+                        <button type="button" onclick="addCustom('documents[]', 'docsList', 'customDoc')">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">SUBMIT PROPERTY</button>
+        </form>
+    </div>
+
+    <script>
+        // Toggle between dropdown and custom input
+        function toggleCustom(field) {
+            const select = document.getElementById(field + 'Select');
+            const input = document.getElementById(field + 'Custom');
+            if (select.value === 'custom') {
+                select.style.display = 'none';
+                input.classList.add('active');
+                input.focus();
+            } else {
+                input.classList.remove('active');
+                select.style.display = 'block';
+            }
+        }
+
+        // Load dropdowns from backend
+        fetch('/api/addons')
+            .then(r => r.json())
+            .then(data => {
+                const typeSelect = document.getElementById('propertyTypeSelect');
+                const catSelect = document.getElementById('categorySelect');
+
+                typeSelect.innerHTML = '<option value="">Select Type</option>';
+                catSelect.innerHTML = '<option value="">Select Category</option>';
+
+                data.property_types.forEach(t => {
+                    typeSelect.add(new Option(t, t));
+                });
+                data.categories.forEach(c => {
+                    catSelect.add(new Option(c, c));
+                });
+
+                // Add custom option at the end
+                typeSelect.add(new Option('Custom (Type your own)', 'custom'));
+                catSelect.add(new Option('Custom (Type your own)', 'custom'));
+            });
+
+        // Show file names
+        document.getElementById('photos').addEventListener('change', e => {
+            document.getElementById('photoNames').textContent =
+                e.target.files.length ? Array.from(e.target.files).map(f => f.name).join(', ') : 'No photos selected';
+        });
+        document.getElementById('videos').addEventListener('change', e => {
+            document.getElementById('videoNames').textContent =
+                e.target.files.length ? Array.from(e.target.files).map(f => f.name).join(', ') : 'No videos selected';
+        });
+
+        // Add custom amenity/document
+        window.addCustom = function(type, containerId, inputId) {
+            const input = document.getElementById(inputId);
+            if (!input.value.trim()) return;
+            const label = document.createElement('label');
+            label.innerHTML = `<input type="checkbox" name="${type}" value="${input.value.trim()}" checked> ${input.value.trim().toUpperCase()}`;
+            document.getElementById(containerId).appendChild(label);
+            input.value = '';
+        };
+
+        // Submit form - handle custom inputs
+        document.getElementById('propertyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Handle custom property type
+            const typeSelect = document.getElementById('propertyTypeSelect');
+            const typeCustom = document.getElementById('propertyTypeCustom');
+            if (typeSelect.value === 'custom' && typeCustom.value.trim()) {
+                typeSelect.name = ''; // remove name from select
+                typeCustom.name = 'property_type'; // assign name to input
+            }
+
+            // Handle custom category
+            const catSelect = document.getElementById('categorySelect');
+            const catCustom = document.getElementById('categoryCustom');
+            if (catSelect.value === 'custom' && catCustom.value.trim()) {
+                catSelect.name = '';
+                catCustom.name = 'category';
+            }
+
+            const formData = new FormData(this);
+
+            try {
+                const response = await fetch('/api/submit-property', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                alert(result.success ? "Property Listed Successfully!" : "Error: " + result.message);
+                if (result.success) {
+                    this.reset();
+                    document.getElementById('photoNames').textContent = 'No photos selected';
+                    document.getElementById('videoNames').textContent = 'No videos selected';
+                    // Reset custom fields
+                    document.querySelectorAll('.custom-input').forEach(el => el.classList.remove('active'));
+                    document.querySelectorAll('select').forEach(el => el.style.display = 'block');
+                }
+            } catch (err) {
+                alert("Submission failed.");
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Serenia India</title>
+
+    <!-- Best matching rounded bold font -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #A1D4D6;
+            font-family: 'Poppins', sans-serif;
+            color: #6A1B9A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* Left Card with "HI FROM SERENIA" */
+        .left-card {
+            background: #D7C8E2;
+            border-radius: 40px;
+            padding: 60px 50px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateX(-100px);
+            animation: slideInLeft 1.2s ease-out 0.4s forwards;
+        }
+
+        .hi-text {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 80px;
+            background: linear-gradient(135deg, #9C27B0, #E91E63);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .from-text {
+            font-size: 70px;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #7B1FA2, #BA68C8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .serenia-big {
+            font-size: 110px;
+            font-family: 'Fredoka One', sans-serif;
+            background: linear-gradient(135deg, #8E24AA, #EC407A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 5px;
+        }
+
+        /* Right Side Content */
+        .right-content {
+            opacity: 0;
+            transform: translateX(100px);
+            animation: slideInRight 1.2s ease-out 0.6s forwards;
+        }
+
+        .about-title {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 90px;
+            background: linear-gradient(90deg, #8E24AA, #EC407A, #FF6BD6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            line-height: 1;
+        }
+
+        .description {
+            font-size: 26px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        .proudly {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 50px;
+            background: linear-gradient(90deg, #FFA726, #FF7043, #FF4081);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.8s forwards;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container { flex-direction: column; gap: 50px; }
+            .left-card, .right-content { transform: none !important; animation: none !important; opacity: 1; }
+            .about-title { font-size: 70px; }
+            .hi-text { font-size: 60px; }
+            .serenia-big { font-size: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Left Card -->
+        <div class="left-card">
+            <div class="hi-text">HI</div>
+            <div class="from-text">FROM</div>
+            <div class="serenia-big">SERENIA</div>
+        </div>
+
+        <!-- Right Content -->
+        <div class="right-content">
+            <h1 class="about-title">ABOUT SERENIA</h1>
+            
+            <p class="description">
+                Serenia India is a forward-thinking software development company dedicated to building 
+                powerful, easy-to-use digital solutions for businesses across India. We specialize in creating 
+                Business Software, and tailored automation tools that help companies manage their operations with 
+                speed, accuracy, and confidence.
+            </p>
+
+            <div class="proudly">PROUDLY MADE IN INDIA</div>
+        </div>
+
+    </div>
+
+</body>
+</html>

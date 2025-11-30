@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenia India</title>
+
+    <!-- Rounded bold font that perfectly matches your design -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; width: 100%; }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #A1D4D6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka One', 'Arial Rounded MT Bold', Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 110px;
+            font-weight: bold;
+            background: linear-gradient(90deg,
+                #B08CC4 0%,    /* SER - slightly darker purple */
+                #B08CC4 28%,
+                #E8A1E8 32%,   /* ENIA - lighter pinkish */
+                #C27BC9 48%,
+                #9A5BB1 68%,
+                #7A3E9A 85%,
+                #4A2A7C 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 8px;
+            margin-bottom: 100px;
+
+            /* Pop-down animation */
+            animation: popDown 1.2s ease-out forwards;
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+
+        @keyframes popDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0.8);
+            }
+            70% {
+                transform: translateY(20px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 70px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .btn {
+            padding: 22px 70px;
+            font-size: 42px;
+            font-weight: bold;
+            border-radius: 60px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            transition: all 0.4s ease;
+            min-width: 300px;
+            font-family: 'Fredoka One', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .enter-btn {
+            background: linear-gradient(135deg, #F0D8F0, #E0B8E8);
+            color: #000;
+            border: 5px solid #B855D8;
+        }
+
+        .serenia-btn {
+            background: linear-gradient(135deg, #F0D8F0, #E0B8E8);
+            color: #B855D8;
+            border: 5px solid #B855D8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">SERENIA INDIA</div>
+
+    <div class="buttons">
+        <a href="index.html" style="text-decoration:none;">
+            <button class="btn enter-btn">ENTER</button>
+        </a>
+        <a href="about.html" style="text-decoration:none;">
+            <button class="btn serenia-btn">SERENIA</button>
+        </a>
+    </div>
+
+</body>
+</html>

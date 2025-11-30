@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eminent Real Estate</title>
+
+    <!-- Perfect bold rounded font (same as your design) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; width: 100%; }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #E0E0E0; /* exact light gray background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka One', Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 90px;
+            font-weight: bold;
+            background: linear-gradient(90deg, 
+                #6A0DAD 0%,    /* deep purple */
+                #9932CC 30%, 
+                #BA55D3 60%, 
+                #DA70D6 100%   /* soft magenta */
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 6px;
+            margin-bottom: 100px;
+
+            /* Pop-down animation */
+            animation: popDown 1.3s ease-out forwards;
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+
+        @keyframes popDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-130px) scale(0.85);
+            }
+            70% {
+                transform: translateY(15px) scale(1.03);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 50px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            padding: 22px 65px;
+            font-size: 38px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #C850C0, #FF6BD6);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(200, 80, 192, 0.4);
+            transition: all 0.4s ease;
+            min-width: 260px;
+            text-decoration: none;
+            text-align: center;
+            transform: translateY(30px);
+        }
+
+        .btn:hover {
+            transform: translateY(-10px) scale(1.08);
+            box-shadow: 0 20px 40px rgba(200, 80, 192, 0.6);
+            background: linear-gradient(135deg, #D100D1, #FF8AEB);
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="title">SERENIA INDIA</h1>
+
+    <div class="buttons">
+        <a href="list.html" class="btn">LIST</a>
+        <a href="viewall.html" class="btn">VIEW ALL</a>
+        <a href="customers.html" class="btn">CUSTOMERS</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Property Details - SERENIA INDIA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; width: 100%; }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#E8E3F0,#D7C8E2);padding:20px;display:flex;flex-direction:column;align-items:center;min-height:100vh;}
+  .header{max-width:1100px;width:100%;background:linear-gradient(135deg,#6A0DAD,#8E24AA);color:white;padding:18px 40px;border-radius:30px;margin-bottom:30px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 10px 30px rgba(106,13,173,.4);}
+  .logo{font-family:'Fredoka One';font-size:42px;background:rgba(255,255,255,.2);padding:10px 30px;border-radius:50px;}
+  .nav a{color:white;font-size:24px;margin:0 20px;font-weight:bold;text-decoration:none;}
+
+  .phone{max-width:1100px;width:100%;background:white;border-radius:40px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.3);display:grid;grid-template-columns:1.7fr 1fr;height:780px;}
+  .gallery{background:#000;position:relative;overflow:hidden;cursor:pointer;height:100%;}
+  .gallery img,.gallery video{width:100%;height:100%;object-fit:cover;display:block;}
+  .gallery:hover img,.gallery:hover video{transform:scale(1.04);transition:transform .5s ease;}
+
+  .details{padding:35px;display:grid;grid-template-columns:1fr 1fr;gap:18px;background:#f8f9fa;height:100%;overflow-y:auto;}
+  .box{background:#111;color:white;padding:20px;border-radius:20px;text-align:center;box-shadow:0 6px 15px rgba(0,0,0,.3);}
+  .box strong{display:block;font-size:14px;opacity:0.9;margin-bottom:6px;}
+  .desc,.amen{grid-column:1/-1;margin-top:20px;padding:30px;border-radius:20px;color:white;}
+  .desc{background:linear-gradient(135deg,#6A0DAD,#8E24AA);}
+  .amen{background:#111;}
+  .amen h3{color:#E040FB;margin-bottom:15px;}
+
+  /* FULLSCREEN LIGHTBOX – BIGGER & CLEANER */
+  #lb{display:none;position:fixed;inset:0;background:#000;z-index:9999;align-items:center;justify-content:center;}
+  #lb.active{display:flex;}
+  #lb img,#lb video{max-width:96vw;max-height:96vh;border-radius:22px;box-shadow:0 40px 100px rgba(0,0,0,.9);object-fit:contain;}
+  .arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:70px;color:rgba(255,255,255,0.8);cursor:pointer;z-index:10;user-select:none;}
+  .arrow:hover{color:white;}
+  #prev{left:30px;}
+  #next{right:30px;}
+  #close{position:absolute;top:30px;right:40px;font-size:40px;color:white;cursor:pointer;opacity:0.8;}
+  #close:hover{opacity:1;}
+
+  @media(max-width:900px){
+    .phone{grid-template-columns:1fr;height:auto;}
+    .gallery{height:500px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">SERENIA INDIA</div>
+  <div class="nav"><a href="index.html">HOME</a><a href="viewall.html">BACK TO LIST</a></div>
+</div>
+
+<div class="phone">
+  <div class="gallery" id="main"></div>
+  <div class="details" id="details"></div>
+</div>
+
+<!-- FULLSCREEN LIGHTBOX -->
+<div id="lb">
+  <div id="close">×</div>
+  <div class="arrow" id="prev">◄</div>
+  <div id="media"></div>
+  <div class="arrow" id="next">►</div>
+</div>
+
+<script>
+let allMedia = [];
+let current = -1;
+
+document.getElementById('main').onclick = () => {
+  if(allMedia.length===0) return;
+  current = 0;
+  showMedia();
+  document.getElementById('lb').classList.add('active');
+};
+
+document.getElementById('next').onclick = (e) => { e.stopPropagation(); if(current < allMedia.length-1) current++; else current=0; showMedia(); };
+document.getElementById('prev').onclick = (e) => { e.stopPropagation(); if(current > 0) current--; else current=allMedia.length-1; showMedia(); };
+document.getElementById('close').onclick = () => document.getElementById('lb').classList.remove('active');
+document.getElementById('lb').onclick = (e) => { if(e.target===document.getElementById('lb')) document.getElementById('lb').classList.remove('active'); };
+
+function showMedia() {
+  const container = document.getElementById('media');
+  const item = allMedia[current];
+  if(item.type==='video'){
+    container.innerHTML = `<video controls autoplay loop playsinline style="max-width:96vw;max-height:96vh;border-radius:22px;">
+                             <source src="videos/${item.file}" type="video/mp4">
+                           </video>`;
+  } else {
+    container.innerHTML = `<img src="photos/${item.file}" style="max-width:96vw;max-height:96vh;border-radius:22px;">`;
+  }
+}
+
+async function load(){
+  const id = new URLSearchParams(location.search).get('id');
+  if(!id) return;
+
+  try {
+    const r = await fetch('properties.csv?t='+Date.now());
+    const text = await r.text();
+    const lines = text.trim().split('\n');
+    const headers = lines[0].split(',');
+
+    let property = null;
+    for(let i=1;i<lines.length;i++){
+      const vals = lines[i].split(',').map(v=>v.trim().replace(/^"|"$/g,''));
+      const row = {};
+      headers.forEach((h,j)=>row[h.trim()]=vals[j]||'');
+      if(row.id===id){ property=row; break; }
+    }
+    if(!property) return;
+
+    const photos = (property.photos||'').split('|').map(s=>s.trim()).filter(Boolean);
+    const videos = (property.videos||'').split('|').map(s=>s.trim()).filter(Boolean);
+    allMedia = [...photos.map(f=>({type:'photo',file:f})), ...videos.map(f=>({type:'video',file:f}))];
+
+    const main = document.getElementById('main');
+    if(allMedia.length===0){
+      main.innerHTML = '<div style="color:#fff;font-size:30px;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">No Media</div>';
+    } else if(allMedia[0].type==='video'){
+      main.innerHTML = `<video autoplay muted loop playsinline><source src="videos/${allMedia[0].file}" type="video/mp4"></video>`;
+    } else {
+      main.innerHTML = `<img src="photos/${allMedia[0].file}" onerror="this.src='https://via.placeholder.com/1200x800/200/fff?text=Image+Missing'">`;
+    }
+
+    // Details
+    const am = (property.amenities||'').split('|').map(a=>a.trim()).filter(Boolean);
+    document.getElementById('details').innerHTML = `
+      <div class="box"><strong>PRICE</strong>AED ${property.sale_price?Number(property.sale_price).toLocaleString():'—'}</div>
+      <div class="box"><strong>RENT</strong>AED ${property.monthly_rent?Number(property.monthly_rent).toLocaleString():'—'}</div>
+      <div class="box"><strong>CITY</strong>${property.city||'—'}</div>
+      <div class="box"><strong>ADDRESS</strong>${property.full_address||'—'}</div>
+      <div class="box"><strong>SQFT</strong>${property.area_sqft?Number(property.area_sqft).toLocaleString()+' sqft':'—'}</div>
+      <div class="box"><strong>BEDS</strong>${property.bedrooms||'—'}</div>
+      <div class="box"><strong>BATHS</strong>${property.bathrooms||'—'}</div>
+      <div class="desc"><strong>DESCRIPTION</strong><br><br>${property.description||'No description'}</div>
+      <div class="amen"><h3>AMENITIES</h3>${am.length?am.map(a=>'• '+a).join('<br>'):'None listed'}</div>
+    `;
+
+  } catch(e){ console.error(e); }
+}
+
+load();
+</script>
+</body>
+</html>
